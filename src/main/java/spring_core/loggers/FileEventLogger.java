@@ -11,6 +11,9 @@ public class FileEventLogger implements EventLogger {
     private String filename;
     private File file;
 
+    public FileEventLogger() {
+    }
+
     public FileEventLogger(String filename) {
         this.filename = filename;
         this.file = new File(filename);
@@ -20,10 +23,16 @@ public class FileEventLogger implements EventLogger {
         if(!file.canWrite()) {
             System.exit(1);
         }
+        writeToFile(file, "", false);
+
     }
 
     @Override
     public void logEvent(Event event) throws IOException {
-        FileUtils.writeStringToFile(file, event.getMessage(), true);
+        writeToFile(file, event.getMessage(), true);
+    }
+
+    private void writeToFile(File file, String message, boolean bool ) throws IOException {
+        FileUtils.writeStringToFile(file, message, bool);
     }
 }

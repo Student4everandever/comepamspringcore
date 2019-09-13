@@ -11,6 +11,7 @@ public class Event {
     private String message;
     private Date date;
 
+
     Event(Date date, DateFormat df) {
         this.date = date;
         this.df = df;
