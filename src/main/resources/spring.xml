@@ -24,7 +24,7 @@
 
     <bean id="cacheFileLogger" class="spring_core.loggers.CacheFileEventLogger" destroy-method="destroy">
         <constructor-arg index="0" value="LogFromSpringCache.txt"/>
-        <constructor-arg index="1" value="20"/>
+        <constructor-arg index="1" value="4"/>
     </bean>
 
     <bean id="fileLogger" class="spring_core.loggers.FileEventLogger" init-method="init">
@@ -33,9 +33,5 @@
 
     <bean id="app" class="spring_core.App">
         <constructor-arg ref="client"/>
-        <constructor-arg ref="event"/>
-        <constructor-arg ref="eventLogger"/>
-        <constructor-arg ref="fileLogger"/>
-        <constructor-arg ref="cacheFileLogger"/>
     </bean>
 </beans>

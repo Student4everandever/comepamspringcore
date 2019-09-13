@@ -2,13 +2,12 @@ package spring_core;
 
 import java.text.DateFormat;
 import java.util.Date;
-
-import static java.lang.Math.random;
+import java.util.Random;
 
 public class Event {
 
     private final DateFormat df;
-    public int id = (int) random();
+    public int id = new Random().nextInt();
     private String message;
     private Date date;
 

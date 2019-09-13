@@ -19,8 +19,6 @@ public class CacheFileEventLogger extends FileEventLogger {
     public void logEvent(Event event) throws IOException {
         cache.add(event);
 
-        System.out.println(cache);
-
         if(cache.size() == cacheSize) {
             writeEventFromCache();
             cache.clear();
@@ -35,7 +33,7 @@ public class CacheFileEventLogger extends FileEventLogger {
 
     private void writeEventFromCache() throws IOException {
 
-        for (Event event: cache) {
+        for (Event event : cache) {
             super.logEvent(event);
         }
     }
