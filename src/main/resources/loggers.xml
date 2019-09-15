@@ -19,7 +19,7 @@
         <constructor-arg>
             <list>
                 <ref bean="consoleEventLogger" />
-                <ref bean="cacheFileLogger" />
+                <ref bean="fileLogger" />
             </list>
         </constructor-arg>
     </bean>

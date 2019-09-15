@@ -31,7 +31,7 @@ public class Client {
         return greetings;
     }
 
-    public void setGreetings(String greetings) {
+    public void setGreeting(String greeting) {
         this.greetings = greetings;
     }
 }
