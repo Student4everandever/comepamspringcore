@@ -1,41 +1,55 @@
 package spring_core.loggers;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import spring_core.Event;
 
-import java.io.IOException;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class CacheFileEventLogger extends FileEventLogger {
 
-    private String filename;
+    // Use system property cache.size or 5 if property is not set
+    @Value("${cache.size:5}")
     private int cacheSize;
-    private List<Event> cache = new ArrayList<Event>();
+
+    private List<Event> cache;
+
+    public CacheFileEventLogger() {
+    }
 
     public CacheFileEventLogger(String filename, int cacheSize) {
         super(filename);
         this.cacheSize = cacheSize;
     }
 
-    public void logEvent(Event event) throws IOException {
+    @PostConstruct
+    public void initCache() {
+        this.cache = new ArrayList<Event>(cacheSize);
+    }
+
+    @PreDestroy
+    public void destroy() {
+        if (!cache.isEmpty()) {
+            writeEventsFromCache();
+        }
+    }
+
+    @Override
+    public void logEvent(Event event) {
         cache.add(event);
 
-        if(cache.size() == cacheSize) {
-            writeEventFromCache();
+        if (cache.size() == cacheSize) {
+            writeEventsFromCache();
             cache.clear();
         }
     }
 
-    public void destroy() throws IOException {
-        if(!cache.isEmpty()) {
-            writeEventFromCache();
-        }
+    private void writeEventsFromCache() {
+        cache.forEach(super::logEvent);
     }
 
-    private void writeEventFromCache() throws IOException {
-
-        for (Event event : cache) {
-            super.logEvent(event);
-        }
-    }
 }

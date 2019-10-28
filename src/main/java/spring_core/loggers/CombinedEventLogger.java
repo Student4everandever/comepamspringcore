@@ -1,20 +1,20 @@
 package spring_core.loggers;
 
+import org.springframework.stereotype.Component;
 import spring_core.Event;
 
-import java.io.IOException;
-import java.util.List;
+import javax.annotation.Resource;
+import java.util.Collection;
 
+@Component
 public class CombinedEventLogger implements EventLogger {
-    private List<EventLogger> loggerList;
 
-    public CombinedEventLogger(List<EventLogger> loggerList) {
-        this.loggerList = loggerList;
-    }
+    @Resource(name = "combinedLoggers")
+    private Collection<EventLogger> loggers;
 
     @Override
-    public void logEvent(Event event) throws IOException {
-        for (EventLogger eventLogger : loggerList) {
+    public void logEvent(Event event) {
+        for (EventLogger eventLogger : loggers) {
             eventLogger.logEvent(event);
         }
     }

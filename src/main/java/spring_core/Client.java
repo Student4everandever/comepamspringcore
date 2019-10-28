@@ -6,6 +6,9 @@ public class Client {
     private String fullName;
     private String greetings;
 
+    public Client() {
+    }
+
     public Client(String id, String fullName) {
         this.id = id;
         this.fullName = fullName;
@@ -27,11 +30,11 @@ public class Client {
         this.fullName = fullName;
     }
 
-    public String getGreetings() {
-        return greetings;
+    public void setGreeting(String greeting) {
+        this.greetings = greeting;
     }
 
-    public void setGreeting(String greeting) {
-        this.greetings = greetings;
+    public String getGreeting() {
+        return greetings;
     }
 }
