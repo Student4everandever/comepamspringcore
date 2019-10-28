@@ -1,5 +1,7 @@
 package spring_core;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Random;
