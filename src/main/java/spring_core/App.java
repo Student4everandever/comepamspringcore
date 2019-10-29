@@ -1,19 +1,40 @@
 package spring_core;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Service;
+import spring_core.conf.AppConfig;
+import spring_core.conf.LoggerConfig;
 import spring_core.loggers.EventLogger;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Map;
 
+@Service
 public class App {
 
-    private static ConfigurableApplicationContext applicationContext;
+    //private static ConfigurableApplicationContext applicationContext;
+
+    private static AnnotationConfigApplicationContext applicationContext;
+
+    @Autowired
     private Client client;
+
+    @Resource
     private EventLogger cacheFileEventLogger;
+
+    @Resource
     private Map<EventType, EventLogger> loggers;
-    private static int count;
+
+//    @Value("${count:3}")
+    private static int count = 5;
+
+    public App() {}
 
     public App(Client client, EventLogger cacheFileEventLogger, Map<EventType, EventLogger> loggers, int count) {
         this.client = client;
@@ -24,7 +45,13 @@ public class App {
 
     public static void main(String [] args) throws IOException {
 
-        applicationContext = new ClassPathXmlApplicationContext("spring.xml");
+        //applicationContext = new ClassPathXmlApplicationContext("spring.xml");
+
+        applicationContext = new AnnotationConfigApplicationContext();
+
+        applicationContext.register(AppConfig.class, LoggerConfig.class);
+        applicationContext.scan("spring_core");
+        applicationContext.refresh();
 
         App app = (App) applicationContext.getBean("app");
 

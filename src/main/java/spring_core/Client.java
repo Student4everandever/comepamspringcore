@@ -6,6 +6,8 @@ public class Client {
     private String fullName;
     private String greetings;
 
+    public Client() { }
+
     public Client(String id, String fullName) {
         this.id = id;
         this.fullName = fullName;
